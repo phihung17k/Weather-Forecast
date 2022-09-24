@@ -1,17 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
 import 'package:weather_forecast/bloc/home/home_event.dart';
 import 'package:weather_forecast/bloc/home/home_state.dart';
 import 'package:weather_forecast/models/current/current_model.dart';
 import 'package:weather_forecast/models/forecast/forecast_day/hour_model.dart';
 import 'package:weather_forecast/models/forecast/forecast_model.dart';
-import 'package:weather_forecast/models/location/location_model.dart';
+import 'package:weather_forecast/models/map/location_model.dart';
 import 'package:weather_forecast/models/view_models/hourly_forecast_item_view_model.dart';
 import 'package:weather_forecast/models/view_models/weather_heading_view_model.dart';
 import 'package:weather_forecast/services/interface/i_home_service.dart';
 
 import '../../log.dart';
+import '../../models/map/address_component_model.dart';
 import '../../models/view_models/today_highlight_view_model.dart';
 import '../../utils.dart';
 
@@ -30,7 +30,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Position? position = await checkPermission();
     // position ??= await Geolocator.getLastKnownPosition();
     //get default position - Hanoi lat: 21.0313511, lon: 105.8309554
-    String location = "Hanoi";
+    String location = "21.0313511 105.8309554";
     if (position != null) {
       //format: "lat lon"
       location = "${position.latitude} ${position.longitude}";
@@ -40,9 +40,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await getData(emitter, location);
   }
 
-  Future<void> getData(Emitter<HomeState> emitter, String location) async {
+  Future<void> getData(
+      Emitter<HomeState> emitter, String locationCoordinate) async {
     emitter.call(HomeLoadingState());
-    var weatherForecastToday = await _service.getWeatherForecastToday(location);
+    //get location name accuracy
+    List<String> coordinates = locationCoordinate.split(' ');
+    List<AddressComponentModel> addressComponents =
+        await _service.getAddressInformation(
+            double.tryParse(coordinates[0])!, double.tryParse(coordinates[1])!);
+    //remove address component if its type is plus_code: M64Q+FMJ
+    addressComponents.removeWhere(
+        (addressComponent) => addressComponent.types!.contains("plus_code"));
+    String locationName = addressComponents.join(', ');
+
+    //get weather forecast
+    var weatherForecastToday =
+        await _service.getWeatherForecastToday(locationCoordinate);
     if (weatherForecastToday != null) {
       LocationModel locationModel = weatherForecastToday.location!;
       CurrentModel currentModel = weatherForecastToday.current!;
@@ -82,7 +95,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }).toList();
 
       emitter.call(state.copyWith(
-          locationName: locationModel.name ?? "Undefined",
+          locationCoordinate: locationCoordinate,
+          locationName: locationName,
           weatherHeading: weatherHeading,
           todayHighLight: todayHighlight,
           hourlyForecasts: hourlyForecasts));

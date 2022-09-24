@@ -76,6 +76,7 @@ flutter:
     - assets/images/weather/
     - assets/images/weather/day/
     - assets/images/weather/night/
+    - assets/ca/lets-encrypt-r3.pem
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

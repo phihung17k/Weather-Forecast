@@ -5,5 +5,6 @@ import '../services/services.dart';
 class ServiceDependencies {
   static Future setup(GetIt injector) async {
     injector.registerFactory<IHomeService>(() => HomeService());
+    injector.registerFactory<IMapService>(() => MapService());
   }
 }

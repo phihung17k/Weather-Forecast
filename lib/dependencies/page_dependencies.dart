@@ -8,6 +8,7 @@ class PageDependencies {
   static Future setup(GetIt injector) async {
     injector.registerFactory<Widget>(() => HomePage(injector()),
         instanceName: Routes.home);
-    injector.registerFactory<Widget>(() => MapPage(), instanceName: Routes.map);
+    injector.registerFactory<Widget>(() => MapPage(injector()),
+        instanceName: Routes.map);
   }
 }

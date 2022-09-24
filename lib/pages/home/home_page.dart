@@ -40,21 +40,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    RouteSettings settings = ModalRoute.of(context)!.settings;
-    if (settings.arguments != null) {
-      Marker? marker = settings.arguments as Marker?;
-      if (marker != null) {
-        Log.d(
-            "Select marker (lat, lon): ${marker.position.latitude}, ${marker.position.longitude}");
-        _bloc.add(WeatherForecastUpdationEvent(marker));
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _bloc,
@@ -88,18 +73,18 @@ class _HomePageState extends State<HomePage> {
             actions: [
               IconButton(
                   onPressed: () async {
-                    final marker =
-                        await Navigator.pushNamed(context, Routes.map)
-                            as Marker?;
+                    final marker = await Navigator.pushNamed(
+                        context, Routes.map,
+                        arguments: _bloc.state.locationCoordinate) as Marker?;
                     if (marker != null) {
                       Log.d(
                           "Select marker (lat, lon): ${marker.position.latitude}, ${marker.position.longitude}");
                       _bloc.add(WeatherForecastUpdationEvent(marker));
                     }
                   },
-                  icon: const Icon(
-                    Icons.map,
-                    size: 26,
+                  icon: Image.asset(
+                    "${StringUtils.imagePath}/map.png",
+                    fit: BoxFit.cover,
                   ))
             ],
           ),

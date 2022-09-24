@@ -1,7 +1,7 @@
 import '../log.dart';
 import 'current/current_model.dart';
 import 'forecast/forecast_model.dart';
-import 'location/location_model.dart';
+import 'map/location_model.dart';
 
 class WeatherForecastTodayModel {
   final LocationModel? location; //location
