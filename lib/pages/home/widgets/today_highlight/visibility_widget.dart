@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/home/home_bloc.dart';
 import '../../../../bloc/home/home_state.dart';
 import '../../../../utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VisibilityWidget extends StatelessWidget {
-  VisibilityWidget({super.key});
+  final AppLocalizations appLocalizations;
+  VisibilityWidget(this.appLocalizations, {super.key});
 
   //compute by Air Quality Index (AQI)
   final List<String> visibilityLevels = [
@@ -21,17 +23,17 @@ class VisibilityWidget extends StatelessWidget {
   //unit km
   String getVisibilityLevel(double visibility) {
     if (visibility > 16) {
-      return visibilityLevels[0];
+      return appLocalizations.good;
     } else if (visibility > 9.65 && visibility <= 16) {
-      return visibilityLevels[1];
+      return appLocalizations.moderate;
     } else if (visibility > 4.8 && visibility <= 9.65) {
-      return visibilityLevels[2];
+      return appLocalizations.unhealthy;
     } else if (visibility > 2.4 && visibility <= 4.8) {
-      return visibilityLevels[3];
+      return appLocalizations.unhealthy;
     } else if (visibility > 1.6 && visibility <= 2.4) {
-      return visibilityLevels[4];
+      return appLocalizations.very_unhealthy;
     }
-    return visibilityLevels[5];
+    return appLocalizations.hazardous;
   }
 
   @override

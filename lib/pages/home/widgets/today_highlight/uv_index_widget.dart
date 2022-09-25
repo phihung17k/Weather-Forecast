@@ -104,4 +104,10 @@ class _UVIndexWidgetState extends State<UVIndexWidget>
       },
     );
   }
+
+  @override
+  void dispose() {
+    _animationController!.dispose();
+    super.dispose();
+  }
 }

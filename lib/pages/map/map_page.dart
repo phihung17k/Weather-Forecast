@@ -11,7 +11,11 @@ import 'package:weather_forecast/pages/map/map_layers/map_layers_widget.dart';
 
 import '../../bloc/map/map_bloc.dart';
 import '../../bloc/map/map_event.dart';
+import '../../global/app_themes.dart';
+import '../../global/bloc/theme_bloc.dart';
 import '../../utils.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapPage extends StatefulWidget {
   final MapBloc bloc;
@@ -70,6 +74,8 @@ class _MapPageState extends State<MapPage> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBloc themeBloc = BlocProvider.of<ThemeBloc>(context, listen: true);
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       // appBar: AppBar(),
       body: Stack(
@@ -130,6 +136,7 @@ class _MapPageState extends State<MapPage> with SingleTickerProviderStateMixin {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   MapLayersWidget(
+                    appLocalizations,
                     onPress: () {
                       if (bloc.state.isDisplayedMapLayers!) {
                         animationController!.forward();
@@ -143,6 +150,7 @@ class _MapPageState extends State<MapPage> with SingleTickerProviderStateMixin {
                     ScaleTransition(
                         scale: animation[i],
                         child: MapLayerItemWidget(
+                          appLocalizations,
                           index: i,
                           onPress: () {
                             bloc.add(ChangeMapTypeEvent(i));
@@ -160,13 +168,16 @@ class _MapPageState extends State<MapPage> with SingleTickerProviderStateMixin {
                   textFieldConfiguration: TextFieldConfiguration(
                     controller: _editingController,
                     decoration: InputDecoration(
-                      hintText: "Search a location",
+                      hintText: appLocalizations.search_location,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.only(left: 20),
-                      fillColor: Colors.white,
+                      fillColor: themeBloc.state.themeData ==
+                              appThemeData[AppTheme.dark]
+                          ? Colors.grey
+                          : Colors.white,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),

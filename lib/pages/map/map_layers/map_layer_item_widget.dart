@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../global/app_themes.dart';
+import '../../../global/bloc/theme_bloc.dart';
 import '../../../utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapLayerItemWidget extends StatelessWidget {
   final int index;
   final Function()? onPress;
+  final AppLocalizations appLocalizations;
 
-  MapLayerItemWidget({
-    Key? key,
-    this.index = 0,
-    this.onPress,
-  }) : super(key: key);
+  MapLayerItemWidget(this.appLocalizations,
+      {Key? key, this.index = 0, this.onPress})
+      : super(key: key);
 
-  final List<String> titles = ["Default", "Satellite", "Terrain"];
+  // final List<String> titles = ["Default", "Satellite", "Terrain"];
   final List<String> mapIcons = [
     "map_default.png",
     "map_satellite.png",
@@ -21,6 +24,12 @@ class MapLayerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context, listen: true);
+    final List<String> titles = [
+      appLocalizations.normal,
+      appLocalizations.satellite,
+      appLocalizations.terrain
+    ];
     return GestureDetector(
       onTap: onPress,
       child: Container(
@@ -29,7 +38,9 @@ class MapLayerItemWidget extends StatelessWidget {
         margin: const EdgeInsets.only(left: 5),
         padding: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: _themeBloc.state.themeData == appThemeData[AppTheme.dark]
+                ? Colors.grey
+                : Colors.white,
             borderRadius: BorderRadius.circular(10),
             boxShadow: const [
               BoxShadow(

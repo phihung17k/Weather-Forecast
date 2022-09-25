@@ -4,19 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/home/home_bloc.dart';
 import '../../../../bloc/home/home_state.dart';
 import '../../../../utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HumidityWidget extends StatelessWidget {
-  HumidityWidget({super.key});
-
-  final List<String> humidityLevels = [
-    "Oppressive", //75 - ...
-    "Muggy", // 70 - 75
-    "Humid", // 65 - 70
-    "Tolerable", // 60 - 65
-    "Pleasant", // 50 - 60
-    "Dry", // 40 - 50
-    "Very dry" // ... - 40
-  ];
+  final AppLocalizations appLocalizations;
+  const HumidityWidget(this.appLocalizations, {super.key});
 
   ///Mức độ 0 - 9% - Siêu Khô Hạn
   ///Mức độ 10 - 19% - Khô Hạn
@@ -32,19 +24,19 @@ class HumidityWidget extends StatelessWidget {
 
   String getHumidityLevel(int humidity) {
     if (humidity > 75) {
-      return humidityLevels[0];
+      return appLocalizations.oppressive;
     } else if (humidity > 70 && humidity <= 75) {
-      return humidityLevels[1];
+      return appLocalizations.muggy;
     } else if (humidity > 65 && humidity <= 70) {
-      return humidityLevels[2];
+      return appLocalizations.humid;
     } else if (humidity > 60 && humidity <= 65) {
-      return humidityLevels[3];
+      return appLocalizations.tolerable;
     } else if (humidity > 50 && humidity <= 60) {
-      return humidityLevels[4];
+      return appLocalizations.pleasant;
     } else if (humidity > 40 && humidity <= 50) {
-      return humidityLevels[5];
+      return appLocalizations.dry;
     }
-    return humidityLevels[6];
+    return appLocalizations.very_dry;
   }
 
   @override

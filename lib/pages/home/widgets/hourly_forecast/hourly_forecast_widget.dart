@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../../bloc/home/home_bloc.dart';
 import '../../../../bloc/home/home_state.dart';
 import 'hourly_forecast_item_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HourlyForecastWidget extends StatefulWidget {
   const HourlyForecastWidget({super.key});
@@ -63,6 +64,8 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
 
     widthHourlyItem = MediaQuery.of(context).size.width / 7;
     heightHourly = MediaQuery.of(context).size.height / 6;
+
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Container(
         margin: const EdgeInsets.only(bottom: 10, top: 10),
         height: heightHourly,
@@ -71,8 +74,8 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "Hourly Forecast",
+            Text(
+              appLocalizations.hourly_forecast,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               textAlign: TextAlign.left,
             ),

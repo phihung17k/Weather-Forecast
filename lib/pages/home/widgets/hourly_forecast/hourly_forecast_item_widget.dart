@@ -23,11 +23,17 @@ class HourlyForecastItemWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(hour),
+          Text(hour,
+              style: isCurrentHour
+                  ? const TextStyle(color: Colors.black)
+                  : Theme.of(context).textTheme.bodyMedium),
           Expanded(
             child: Image.asset(icon),
           ),
-          Text("$tempC°"),
+          Text("$tempC°",
+              style: isCurrentHour
+                  ? const TextStyle(color: Colors.black)
+                  : Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );

@@ -7,6 +7,7 @@ import 'sun_status_widget.dart';
 import 'uv_index_widget.dart';
 import 'visibility_widget.dart';
 import 'wind_status_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TodayItemWidget extends StatefulWidget {
   final GlobalKey widgetKey = GlobalKey();
@@ -24,37 +25,37 @@ class _TodayItemWidgetState extends State<TodayItemWidget> {
   double width = 0;
   // double height = 0;
 
-  String getTitle(TodayItemEnum item) {
+  String getTitle(TodayItemEnum item, AppLocalizations appLocalizations) {
     switch (item) {
       case TodayItemEnum.uvIndex:
-        return "UV Index";
+        return appLocalizations.uv_index;
       case TodayItemEnum.windStatus:
-        return "Wind Status";
+        return appLocalizations.wind_status;
       case TodayItemEnum.sunStatus:
-        return "Sunrise and Sunset";
+        return appLocalizations.sunrise_and_sunset;
       case TodayItemEnum.humidity:
-        return "Humidity";
+        return appLocalizations.humidity;
       case TodayItemEnum.visibility:
-        return "Visibility";
+        return appLocalizations.visibility;
       case TodayItemEnum.airQuality:
-        return "Air Quality";
+        return appLocalizations.air_quality;
     }
   }
 
-  Widget getInformation(TodayItemEnum item) {
+  Widget getInformation(TodayItemEnum item, AppLocalizations appLocalizations) {
     switch (item) {
       case TodayItemEnum.uvIndex:
         return UVIndexWidget(width);
       case TodayItemEnum.windStatus:
-        return const WindStatusWidget();
+        return WindStatusWidget(appLocalizations);
       case TodayItemEnum.sunStatus:
         return const SunStatusWidget();
       case TodayItemEnum.humidity:
-        return HumidityWidget();
+        return HumidityWidget(appLocalizations);
       case TodayItemEnum.visibility:
-        return VisibilityWidget();
+        return VisibilityWidget(appLocalizations);
       case TodayItemEnum.airQuality:
-        return AirQualityWidget();
+        return AirQualityWidget(appLocalizations);
       default:
         return const SizedBox(
           width: 200,
@@ -83,6 +84,7 @@ class _TodayItemWidgetState extends State<TodayItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -94,9 +96,12 @@ class _TodayItemWidgetState extends State<TodayItemWidget> {
           Container(
             padding: const EdgeInsets.only(left: 18, top: 10),
             height: 52,
-            child: Text(getTitle(item)),
+            child: Text(getTitle(item, appLocalizations)),
           ),
-          SizedBox(width: 200, height: 80, child: getInformation(item)),
+          SizedBox(
+              width: 200,
+              height: 80,
+              child: getInformation(item, appLocalizations)),
           const SizedBox(
             height: 10,
           )

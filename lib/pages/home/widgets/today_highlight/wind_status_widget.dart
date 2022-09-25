@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/home/home_bloc.dart';
 import '../../../../bloc/home/home_state.dart';
 import '../../../../utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WindStatusWidget extends StatelessWidget {
-  const WindStatusWidget({super.key});
+  final AppLocalizations appLocalizations;
+  const WindStatusWidget(this.appLocalizations, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,12 @@ class WindStatusWidget extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    state.todayHighLight!.windDirection!,
+                    appLocalizations.localeName == "vi"
+                        ? compassDirectionViMap[
+                            state.todayHighLight!.windDirection!.toLowerCase()]!
+                        : compassDirectionEnMap[state
+                            .todayHighLight!.windDirection!
+                            .toLowerCase()]!,
                   )
                 ],
               ),

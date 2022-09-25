@@ -1,0 +1,18 @@
+{
+    "s": "South",
+    "e": "East",
+    "n": "North",
+    "w": "West",
+    "ne": "Northeast",
+    "se": "Southeast",
+    "sw": "Southwest",
+    "nw": "Northwest",
+    "wnw": "West-northwest",
+    "nnw": "North-northwest",
+    "nne": "North-northeast",
+    "ene": "East-northeast",
+    "ese": "East-southeast",
+    "sse": "South-southeast",
+    "ssw": "South-southwest",
+    "wsw": "West-southwest"
+}

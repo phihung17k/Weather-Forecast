@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../bloc/home/home_bloc.dart';
 import '../../../../bloc/home/home_state.dart';
 import '../../../../utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AirQualityWidget extends StatelessWidget {
-  AirQualityWidget({super.key});
+  final AppLocalizations appLocalizations;
+  AirQualityWidget(this.appLocalizations, {super.key});
 
   //compute by Air Quality Index (AQI)
   final List<String> aqiLevels = [
@@ -22,17 +24,17 @@ class AirQualityWidget extends StatelessWidget {
   String getAQILevel(int aqi) {
     switch (aqi) {
       case 1:
-        return aqiLevels[0];
+        return appLocalizations.good;
       case 2:
-        return aqiLevels[1];
+        return appLocalizations.moderate;
       case 3:
-        return aqiLevels[2];
+        return appLocalizations.unhealthy;
       case 4:
-        return aqiLevels[3];
+        return appLocalizations.unhealthy;
       case 5:
-        return aqiLevels[4];
+        return appLocalizations.very_unhealthy;
       default:
-        return aqiLevels[5];
+        return appLocalizations.hazardous;
     }
   }
 
@@ -52,7 +54,7 @@ class AirQualityWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Level ${state.todayHighLight!.airQualityIndex!}",
+                        "${appLocalizations.level} ${state.todayHighLight!.airQualityIndex!}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25),
                       ),

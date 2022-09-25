@@ -1,0 +1,18 @@
+{
+    "s": "Nam",
+    "e": "Đông",
+    "n": "Bắc",
+    "w": "Tây",
+    "ne": "Đông Bắc",
+    "se": "Đông Nam",
+    "sw": "Tây Nam",
+    "nw": "Tây Bắc",
+    "wnw": "Tây Tây Bắc",
+    "nnw": "Bắc Tây Bắc",
+    "nne": "Bắc Đông Bắc",
+    "ene": "Đông Đông Bắc",
+    "ese": "Đông Đông Nam",
+    "sse": "Nam Đông Nam",
+    "ssw": "Nam Tây Nam",
+    "wsw": "Tây Tây Nam"
+}
