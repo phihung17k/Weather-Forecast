@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_forecast/bloc/home/home_event.dart';
@@ -23,6 +25,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<InitialDataEvent>(initData);
     // on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
     on<WeatherForecastUpdationEvent>(updateWeatherForecastByNewLocation);
+
+    on<RefreshDataEvent>(refreshData);
   }
 
   Future<void> initData(HomeEvent event, Emitter<HomeState> emitter) async {
@@ -125,6 +129,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       WeatherForecastUpdationEvent event, Emitter<HomeState> emitter) async {
     emitter.call(HomeLoadingState());
     String location = event.marker!.markerId.value;
+    await getData(emitter, location);
+  }
+
+  FutureOr<void> refreshData(
+      RefreshDataEvent event, Emitter<HomeState> emitter) async {
+    Position? position = await Geolocator.getLastKnownPosition();
+    //get default position - Hanoi lat: 21.0313511, lon: 105.8309554
+    String location = "21.0313511 105.8309554";
+    if (position != null) {
+      //format: "lat lon"
+      location = "${position.latitude} ${position.longitude}";
+    }
     await getData(emitter, location);
   }
 }

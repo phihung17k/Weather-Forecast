@@ -30,6 +30,9 @@ void main() async {
   //     .setTrustedCertificatesBytes(data.buffer.asUint8List());
   HttpOverrides.global = MyHttpOverrides();
 
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+
   runApp(
     MaterialApp(
       title: "Weather Forecast",

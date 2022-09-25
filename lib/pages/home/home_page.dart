@@ -43,69 +43,82 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _bloc,
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/images/weather/cloudy.jpg",
-              ),
-              fit: BoxFit.cover),
-        ),
-        // color: Colors.amber,
-        constraints: const BoxConstraints.expand(),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: BlocBuilder<HomeBloc, HomeState>(
-              bloc: _bloc,
-              builder: (context, state) {
-                if (state is! HomeLoadingState && state.locationName != null) {
-                  return Text(state.locationName!,
-                      style:
-                          const TextStyle(color: Colors.black, fontSize: 23));
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: [
-              IconButton(
-                  onPressed: () async {
-                    final marker = await Navigator.pushNamed(
-                        context, Routes.map,
-                        arguments: _bloc.state.locationCoordinate) as Marker?;
-                    if (marker != null) {
-                      Log.d(
-                          "Select marker (lat, lon): ${marker.position.latitude}, ${marker.position.longitude}");
-                      _bloc.add(WeatherForecastUpdationEvent(marker));
-                    }
-                  },
-                  icon: Image.asset(
-                    "${StringUtils.imagePath}/map.png",
-                    fit: BoxFit.cover,
-                  ))
-            ],
+      child: RefreshIndicator(
+        onRefresh: () async {
+          _bloc.add(RefreshDataEvent());
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  "assets/images/weather/default_day.webp",
+                ),
+                fit: BoxFit.cover),
           ),
-          body: Container(
-            color: Colors.transparent,
-            width: double.maxFinite,
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  WeatherHeadingWidget(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TodayHighlightWidget(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HourlyForecastWidget()
-                ],
+          // color: Colors.amber,
+          constraints: const BoxConstraints.expand(),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: BlocBuilder<HomeBloc, HomeState>(
+                bloc: _bloc,
+                builder: (context, state) {
+                  if (state is! HomeLoadingState &&
+                      state.locationName != null) {
+                    return Text(
+                      state.locationName!,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 23,
+                          overflow: TextOverflow.visible),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      softWrap: true,
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      final marker = await Navigator.pushNamed(
+                          context, Routes.map,
+                          arguments: _bloc.state.locationCoordinate) as Marker?;
+                      if (marker != null) {
+                        Log.d(
+                            "Select marker (lat, lon): ${marker.position.latitude}, ${marker.position.longitude}");
+                        _bloc.add(WeatherForecastUpdationEvent(marker));
+                      }
+                    },
+                    icon: Image.asset(
+                      "${StringUtils.imagePath}/map.png",
+                      fit: BoxFit.cover,
+                    ))
+              ],
+            ),
+            body: Container(
+              color: Colors.transparent,
+              width: double.maxFinite,
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    WeatherHeadingWidget(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TodayHighlightWidget(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    HourlyForecastWidget()
+                  ],
+                ),
               ),
             ),
           ),

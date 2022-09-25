@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +20,7 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
   int currentHour = 0;
   double widthHourlyItem = 0;
   double heightHourly = 0;
+  StreamController<bool>? _streamController;
 
   @override
   void initState() {
@@ -25,15 +28,33 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
     DateTime now = DateTime.now();
     currentHour = int.parse(DateFormat('HH').format(now));
     _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    _streamController = StreamController();
+    _streamController!.stream.listen((event) {
       if (_scrollController!.hasClients) {
         if (currentHour >= 4 && currentHour < 20) {
-          _scrollController!.jumpTo((currentHour - 3) * widthHourlyItem);
+          // _scrollController!.jumpTo((currentHour - 3) * widthHourlyItem);
+          _scrollController!.animateTo((currentHour - 3) * widthHourlyItem,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.decelerate);
         } else if (currentHour >= 20) {
-          _scrollController!.jumpTo((currentHour - 5) * widthHourlyItem);
+          // _scrollController!.jumpTo((currentHour - 5) * widthHourlyItem);
+          _scrollController!.animateTo((currentHour - 5) * widthHourlyItem,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.decelerate);
         }
       }
     });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   // print("_scrollController!.hasClients ${_scrollController!.hasClients}");
+    //   if (_scrollController!.hasClients) {
+    //     // print("YES _scrollController!.hasClients");
+    //     if (currentHour >= 4 && currentHour < 20) {
+    //       _scrollController!.jumpTo((currentHour - 3) * widthHourlyItem);
+    //     } else if (currentHour >= 20) {
+    //       _scrollController!.jumpTo((currentHour - 5) * widthHourlyItem);
+    //     }
+    //   }
+    // });
   }
 
   @override
@@ -63,6 +84,7 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
               builder: (context, state) {
                 if (state is! HomeLoadingState &&
                     state.hourlyForecasts != null) {
+                  _streamController!.add(true);
                   return Expanded(
                     child: Stack(
                       children: [
@@ -107,5 +129,11 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget> {
             ),
           ],
         ));
+  }
+
+  @override
+  void dispose() {
+    _scrollController!.dispose();
+    super.dispose();
   }
 }

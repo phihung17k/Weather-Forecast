@@ -9,3 +9,5 @@ class WeatherForecastUpdationEvent extends HomeEvent {
 
   WeatherForecastUpdationEvent(this.marker);
 }
+
+class RefreshDataEvent extends HomeEvent {}
