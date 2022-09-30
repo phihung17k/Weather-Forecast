@@ -67,19 +67,21 @@ class VisibilityWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  height: 20,
-                  child: Row(
-                    children: [
-                      Image.asset("${StringUtils.imagePath}/visibility.png"),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(getVisibilityLevel(
-                          state.todayHighLight!.visibilityKm!))
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Container(
+                        margin: const EdgeInsets.only(left: 15),
+                        height: 20,
+                        child: Image.asset(
+                            "${StringUtils.imagePath}/visibility.png")),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                      child: Text(getVisibilityLevel(
+                          state.todayHighLight!.visibilityKm!)),
+                    )
+                  ],
                 ),
               ],
             );

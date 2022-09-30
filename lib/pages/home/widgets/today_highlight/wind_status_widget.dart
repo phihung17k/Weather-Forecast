@@ -38,25 +38,26 @@ class WindStatusWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 15),
-              height: 20,
-              child: Row(
-                children: [
-                  Image.asset("${StringUtils.imagePath}/compass.png"),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
+            Row(
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 15),
+                    height: 20,
+                    child: Image.asset("${StringUtils.imagePath}/compass.png")),
+                const SizedBox(
+                  width: 5,
+                ),
+                Flexible(
+                  child: Text(
                     appLocalizations.localeName == "vi"
                         ? compassDirectionViMap[
                             state.todayHighLight!.windDirection!.toLowerCase()]!
                         : compassDirectionEnMap[state
                             .todayHighLight!.windDirection!
                             .toLowerCase()]!,
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ]);
         }

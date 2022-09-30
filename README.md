@@ -1,16 +1,51 @@
-# weather_forecast
+<p align="center">
+<a href="#">
+<img src="./external/logo.png" alt="Logo" width=72 height=72/>
+</a>
+<h3 align="center">Weather Forecast</h3>
+<p align="center">
+    ☁️This is the open source of the weather forecast app☁️
+</p>
+</p>
 
-A new Flutter project.
+## Table of contents
 
-## Getting Started
+- [Quick start](#quick-start)
+- [What's included](#whats-included)
 
-This project is a starting point for a Flutter application.
+## Quick start
+The features:
+- On opening the app for the first time, the application requires access to your location, by default it will take a location in the capital city of Hanoi, Vietnam.
+![access-location](/external/access-location.png "access location")
 
-A few resources to get you started if this is your first Flutter project:
+- On next visit, the app automatically uses your current location (or last location) to display forecast results
+![open-app](/external/open_app.gif "open app")
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- See the forecast at one location on the map
+![select-map](/external/select_location_map.gif "select map")
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Search location
+![search](/external/search.gif "search")
+
+- Others features: change layers map, change theme
+
+## What's included
+The application is implemented by flutter framework with BLoC pattern
+
+```text
+root/
+└── assets/
+    ├── constants/
+    │   ├── international files
+    └── images/
+        └── image files
+└── lib/
+    ├── bloc/
+    ├── dependencies/
+    ├── global/
+    ├── I10n/
+    ├── models/
+    ├── pages/
+    ├── services/
+    └── other files
+```
