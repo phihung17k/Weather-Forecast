@@ -16,16 +16,16 @@
 ## Quick start
 The features:
 - On opening the app for the first time, the application requires access to your location, by default it will take a location in the capital city of Hanoi, Vietnam.
-![access-location](/external/access-location.png "access location")
+<img src="./external/access-location.png" alt="access location" style="width: 25%; height: 25%;"/>
 
 - On next visit, the app automatically uses your current location (or last location) to display forecast results
-![open-app](/external/open_app.gif "open app")
+<img src="./external/open_app.gif" alt="open app" style="width: 25%; height: 25%;"/>
 
 - See the forecast at one location on the map
-![select-map](/external/select_location_map.gif "select map")
+<img src="./external/select_location_map.gif" alt="select map" style="width: 25%; height: 25%;"/>
 
 - Search location
-![search](/external/search.gif "search")
+<img src="./external/search.gif" alt="search" style="width: 25%; height: 25%;"/>
 
 - Others features: change layers map, change theme
 
